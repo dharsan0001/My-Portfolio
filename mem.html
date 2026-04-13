@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome To My Website</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+html{scroll-behavior:smooth;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
+
+/* 🌌 THEME COLORS */
+body{
+--bg:#020617;
+--text:white;
+--card:rgba(255,255,255,0.05);
+background:var(--bg);
+color:var(--text);
+transition:0.5s;
+}
+
+/* 🌞 LIGHT MODE */
+body.light{
+--bg:#f1f5f9;
+--text:black;
+--card:white;
+}
+
+/* 3D BACKGROUND */
+body::before, body::after{
+content:"";
+position:fixed;
+width:400px;
+height:400px;
+border-radius:50%;
+filter:blur(120px);
+z-index:-1;
+}
+
+body::before{
+background:#38bdf8;
+top:10%;
+left:10%;
+animation:move1 10s infinite alternate;
+}
+body::after{
+background:#9333ea;
+bottom:10%;
+right:10%;
+animation:move2 12s infinite alternate;
+}
+
+@keyframes move1{
+0%{transform:translate(0,0);}
+100%{transform:translate(120px,60px);}
+}
+@keyframes move2{
+0%{transform:translate(0,0);}
+100%{transform:translate(-120px,-60px);}
+}
+
+/* NAV */
+nav{
+display:flex;
+justify-content:space-between;
+padding:20px;
+background:rgba(0,0,0,0.3);
+backdrop-filter:blur(15px);
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+nav a{
+color:#38bdf8;
+margin:0 10px;
+text-decoration:none;
+}
+
+/* TOGGLE */
+.toggle{
+cursor:pointer;
+padding:8px 15px;
+border-radius:20px;
+background:#38bdf8;
+color:black;
+}
+
+/* HERO */
+.hero{
+display:flex;
+justify-content:space-between;
+align-items:center;
+min-height:90vh;
+padding:80px 10%;
+}
+
+.hero img{
+width:230px;
+height:230px;
+border-radius:50%;
+border:4px solid #38bdf8;
+cursor:pointer;
+transition:0.3s;
+}
+
+.hero img:hover{
+transform:scale(1.1);
+box-shadow:0 0 30px #38bdf8;
+}
+
+/* CARDS */
+.cards{
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+padding:50px 10%;
+}
+
+.card{
+background:var(--card);
+backdrop-filter:blur(15px);
+padding:20px;
+border-radius:15px;
+flex:1;
+min-width:250px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-10px);
+}
+
+/* PROJECT CARD */
+.project{
+margin-top:10px;
+padding:10px;
+border-radius:10px;
+background:rgba(0,0,0,0.3);
+}
+
+.project a{
+color:#38bdf8;
+text-decoration:none;
+}
+
+/* MODAL */
+.modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.8);
+justify-content:center;
+align-items:center;
+z-index:2000;
+}
+
+.modal-content{
+background:var(--bg);
+padding:25px;
+border-radius:15px;
+width:90%;
+max-width:500px;
+}
+
+.close{
+float:right;
+cursor:pointer;
+color:red;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+.hero{flex-direction:column;text-align:center;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<nav>
+<h2>hi Bro</h2>
+<div>
+<a href="#home">Home</a>
+<a href="#portfolio">Portfolio</a>
+<a href="https://github.com/dharsan0001" target="_blank">GitHub</a>
+<a href="https://www.linkedin.com/in/dharsan-mathiyalagan-5b4ba03a7/" target="_blank">LinkedIn</a>
+<span class="toggle" onclick="toggleTheme()">🌙</span>
+</div>
+</nav>
+
+<!-- HERO -->
+<section id="home" class="hero">
+<div>
+<h1>Hi, I'm Dharsan 👋</h1>
+<p>Software Developer | Data Analyst</p>
+<p>I am a Aesthetic proffesional guy</p>
+</div>
+
+<img src="image/dharsh.jpeg" onclick="openModal('profile')">
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+<div class="cards">
+
+<div class="card" onclick="openModal('about')">
+<h3>About Me</h3>
+</div>
+
+<div class="card" onclick="openModal('projects')">
+<h3>Projects</h3>
+</div>
+
+<div class="card" onclick="openModal('contact')">
+<h3>Contact</h3>
+</div>
+
+</div>
+</section>
+
+<!-- MODALS -->
+
+<div id="profile" class="modal">
+<div class="modal-content">
+<span class="close" onclick="closeModal('profile')">X</span>
+<img src="image/dharsh.jpeg" style="width:100%">
+</div>
+</div>
+
+<div id="about" class="modal">
+<div class="modal-content">
+<span class="close" onclick="closeModal('about')">X</span>
+<h3>About Me</h3>
+<p>I am Dharsan from Pudukkottai.</p>
+<p>I am Currently Pursing Last Semester B.Tech AI & DS Final Year Student.</p>
+
+<p>“I am a passionate software developer with a strong interest in building efficient and user-friendly applications.”
+“Motivated and detail-oriented developer eager to create impactful solutions using modern technologies.”</p>
+</div>
+</div>
+
+<div id="projects" class="modal">
+<div class="modal-content">
+<span class="close" onclick="closeModal('projects')">X</span>
+
+<h3>My Projects</h3>
+
+<div class="project">
+<p><b>Ecommerce Customer Segmentation</b></p>
+<a href="https://github.com/dharsan0001/Ecommerce-Customer-Segmentation-Analysis" target="_blank">View Project</a>
+</div>
+
+<div class="project">
+<p><b>Financial Dashboard</b></p>
+<a href="https://github.com/dharsan0001/financial-dahboard" target="_blank">View Project</a>
+</div>
+
+<div class="project">
+<p><b>SaaS Customer Churn Analytics</b></p>
+<a href="https://github.com/dharsan0001/End-to-End-SaaS-Customer-Churn-Revenue-Analytics" target="_blank">View Project</a>
+</div>
+
+<div class="project">
+<p><b>Customer-Segmentation-Analysis</b></p>
+<a href="https://github.com/dharsan0001/Ecommerce-Customer-Segmentation-Analysis" target="_blank">View Project</a>
+</div>
+
+
+<div class="project">
+<p><b>End-to-End-SaaS-Customer-Churn-Revenue-Analytics</b></p>
+<a href="https://github.com/dharsan0001/End-to-End-SaaS-Customer-Churn-Revenue-Analytics" target="_blank">View Project</a>
+</div>
+
+
+
+</div>
+</div>
+
+<div id="contact" class="modal">
+<div class="modal-content">
+<span class="close" onclick="closeModal('contact')">X</span>
+<h3>Contact</h3>
+<p>Email: dharsanm1605@gmail.com</p>
+<p>Phone: 9360270034</p>
+<p>Please Contact me</p>
+</div>
+</div>
+
+<!-- JS -->
+<script>
+function openModal(id){
+document.getElementById(id).style.display="flex";
+}
+
+function closeModal(id){
+document.getElementById(id).style.display="none";
+}
+
+/* DARK LIGHT */
+function toggleTheme(){
+document.body.classList.toggle("light");
+}
+</script>
+
+</body>
+</html>
