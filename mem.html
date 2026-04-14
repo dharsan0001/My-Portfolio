@@ -1,310 +1,335 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Welcome To My Website</title>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dharsan Portfolio</title>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
 <style>
-html{scroll-behavior:smooth;}
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 
-/* 🌌 THEME COLORS */
 body{
---bg:#020617;
---text:white;
---card:rgba(255,255,255,0.05);
-background:var(--bg);
-color:var(--text);
-transition:0.5s;
+background:#020617;
+color:#e2e8f0;
+overflow-x:hidden;
+scroll-behavior:smooth;
 }
 
-/* 🌞 LIGHT MODE */
-body.light{
---bg:#f1f5f9;
---text:black;
---card:white;
-}
-
-/* 3D BACKGROUND */
-body::before, body::after{
-content:"";
+/* 🌌 BACKGROUND */
+canvas{
 position:fixed;
-width:400px;
-height:400px;
-border-radius:50%;
-filter:blur(120px);
+top:0;
+left:0;
 z-index:-1;
-}
-
-body::before{
-background:#38bdf8;
-top:10%;
-left:10%;
-animation:move1 10s infinite alternate;
-}
-body::after{
-background:#9333ea;
-bottom:10%;
-right:10%;
-animation:move2 12s infinite alternate;
-}
-
-@keyframes move1{
-0%{transform:translate(0,0);}
-100%{transform:translate(120px,60px);}
-}
-@keyframes move2{
-0%{transform:translate(0,0);}
-100%{transform:translate(-120px,-60px);}
 }
 
 /* NAV */
 nav{
+position:fixed;
+top:0;
+width:100%;
 display:flex;
-justify-content:space-between;
-padding:20px;
+justify-content:flex-end;
+padding:20px 8%;
 background:rgba(0,0,0,0.3);
 backdrop-filter:blur(15px);
-position:sticky;
-top:0;
-z-index:1000;
+z-index:100;
 }
 
 nav a{
 color:#38bdf8;
-margin:0 10px;
-text-decoration:none;
+font-size:22px;
+margin-left:20px;
 }
 
-/* TOGGLE */
-.toggle{
-cursor:pointer;
-padding:8px 15px;
-border-radius:20px;
-background:#38bdf8;
-color:black;
+/* SECTION */
+section{
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+text-align:center;
+padding:80px 20px;
 }
 
 /* HERO */
-.hero{
-display:flex;
-justify-content:space-between;
-align-items:center;
-min-height:90vh;
-padding:80px 10%;
-}
-
 .hero img{
 width:230px;
-height:230px;
 border-radius:50%;
 border:4px solid #38bdf8;
 cursor:pointer;
-transition:0.3s;
+transition:0.4s;
 }
 
 .hero img:hover{
 transform:scale(1.1);
-box-shadow:0 0 30px #38bdf8;
+box-shadow:0 0 40px #38bdf8;
 }
 
-/* CARDS */
-.cards{
-display:flex;
-gap:20px;
-flex-wrap:wrap;
-padding:50px 10%;
+.hero h1{
+font-size:3rem;
 }
 
-.card{
-background:var(--card);
-backdrop-filter:blur(15px);
-padding:20px;
-border-radius:15px;
-flex:1;
-min-width:250px;
-cursor:pointer;
-transition:0.3s;
-}
-
-.card:hover{
-transform:translateY(-10px);
-}
-
-/* PROJECT CARD */
-.project{
-margin-top:10px;
-padding:10px;
-border-radius:10px;
-background:rgba(0,0,0,0.3);
-}
-
-.project a{
+.hero p{
 color:#38bdf8;
-text-decoration:none;
+margin-top:10px;
 }
 
-/* MODAL */
+/* CARD */
+.card{
+max-width:700px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(20px);
+padding:30px;
+border-radius:20px;
+margin-top:20px;
+transform:translateY(80px);
+opacity:0;
+transition:0.8s;
+}
+
+.card.show{
+transform:translateY(0);
+opacity:1;
+}
+
+/* BUTTON */
+.btn{
+display:inline-block;
+padding:10px 20px;
+background:#38bdf8;
+color:black;
+border-radius:20px;
+text-decoration:none;
+margin:10px;
+}
+
+/* PROJECT */
+.project{
+margin:15px 0;
+}
+
+/* IMAGE POPUP */
 .modal{
-display:none;
 position:fixed;
 top:0;
 left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.8);
+background:black;
+display:flex;
 justify-content:center;
 align-items:center;
-z-index:2000;
+opacity:0;
+pointer-events:none;
+transition:0.3s;
+z-index:200;
 }
 
-.modal-content{
-background:var(--bg);
-padding:25px;
-border-radius:15px;
+.modal.active{
+opacity:1;
+pointer-events:auto;
+}
+
+.modal img{
+width:320px;
+border-radius:20px;
+transform:scale(0.5);
+transition:0.3s;
+}
+
+.modal.active img{
+transform:scale(1);
+}
+
+/* RESUME */
+iframe{
 width:90%;
-max-width:500px;
-}
-
-.close{
-float:right;
-cursor:pointer;
-color:red;
+height:400px;
+border-radius:15px;
+margin-top:15px;
 }
 
 /* MOBILE */
 @media(max-width:768px){
-.hero{flex-direction:column;text-align:center;}
+.hero h1{font-size:2rem;}
 }
 </style>
 </head>
 
 <body>
 
+<canvas id="bg"></canvas>
+
 <!-- NAV -->
 <nav>
-<h2>hi Bro</h2>
-<div>
-<a href="#home">Home</a>
-<a href="#portfolio">Portfolio</a>
-<a href="https://github.com/dharsan0001" target="_blank">GitHub</a>
-<a href="https://www.linkedin.com/in/dharsan-mathiyalagan-5b4ba03a7/" target="_blank">LinkedIn</a>
-<span class="toggle" onclick="toggleTheme()">🌙</span>
-</div>
+<a href="https://github.com/dharsan0001" target="_blank"><i class="fab fa-github"></i></a>
+<a href="https://www.linkedin.com/in/dharsan-mathiyalagan-5b4ba03a7/" target="_blank"><i class="fab fa-linkedin"></i></a>
 </nav>
 
 <!-- HERO -->
-<section id="home" class="hero">
-<div>
+<section class="hero">
+<img src="image/dharsh.jpeg" id="profilePic">
 <h1>Hi, I'm Dharsan 👋</h1>
-<p>Software Developer | Data Analyst</p>
-<p>I am a Aesthetic proffesional guy</p>
-</div>
-
-<img src="image/dharsh.jpeg" onclick="openModal('profile')">
+<p>Junior Software Developer | Data Analyst</p>
 </section>
 
-<!-- PORTFOLIO -->
-<section id="portfolio">
-<div class="cards">
+<!-- ABOUT -->
+<section>
+<div class="card">
+<h2>About Me</h2>
 
-<div class="card" onclick="openModal('about')">
-<h3>About Me</h3>
+<p>
+I am a passionate <b>Junior Software Developer</b> and <b>Data Analyst</b> with a strong foundation in SQL, Python, Power BI, and Excel.
+</p>
+
+<br>
+
+<p>
+I have hands-on experience working on real-world projects such as customer segmentation, SaaS churn analysis, financial dashboards, and sales analytics.
+</p>
+
+<br>
+
+<p>
+I specialize in <b>data analysis, ETL pipelines, dashboard creation, and business insights</b>.
+</p>
+
+<br>
+
+<p>
+Currently seeking opportunities to apply my skills and grow professionally.
+</p>
+
+</div>
+</section>
+
+<!-- PROJECTS -->
+<section>
+<div class="card">
+<h2>Projects</h2>
+
+<div class="project">
+<b>Customer Segmentation</b><br>
+<a href="https://github.com/dharsan0001/Customer-Segmentation-Project" target="_blank">View</a>
 </div>
 
-<div class="card" onclick="openModal('projects')">
-<h3>Projects</h3>
+<div class="project">
+<b>E-commerce Analysis</b><br>
+<a href="https://github.com/dharsan0001/Ecommerce-Customer-Segmentation-Analysis" target="_blank">View</a>
 </div>
 
-<div class="card" onclick="openModal('contact')">
-<h3>Contact</h3>
+<div class="project">
+<b>SaaS Churn</b><br>
+<a href="https://github.com/dharsan0001/End-to-End-SaaS-Customer-Churn-Revenue-Analytics" target="_blank">View</a>
+</div>
+
+<div class="project">
+<b>Financial Dashboard</b><br>
+<a href="https://github.com/dharsan0001/financial-dahboard" target="_blank">View</a>
+</div>
+
+<div class="project">
+<b>Sales Analysis</b><br>
+<a href="https://github.com/dharsan0001/Sales-Analysis-Project" target="_blank">View</a>
 </div>
 
 </div>
 </section>
 
-<!-- MODALS -->
+<!-- RESUME -->
+<section>
+<div class="card">
+<h2>Resume</h2>
 
-<div id="profile" class="modal">
-<div class="modal-content">
-<span class="close" onclick="closeModal('profile')">X</span>
-<img src="image/dharsh.jpeg" style="width:100%">
-</div>
-</div>
+<a href="resume.pdf" target="_blank" class="btn">View</a>
+<a href="resume.pdf" download class="btn">Download</a>
 
-<div id="about" class="modal">
-<div class="modal-content">
-<span class="close" onclick="closeModal('about')">X</span>
-<h3>About Me</h3>
-<p>I am Dharsan from Pudukkottai.</p>
-<p>I am Currently Pursing Last Semester B.Tech AI & DS Final Year Student.</p>
-
-<p>“I am a passionate software developer with a strong interest in building efficient and user-friendly applications.”
-“Motivated and detail-oriented developer eager to create impactful solutions using modern technologies.”</p>
-</div>
-</div>
-
-<div id="projects" class="modal">
-<div class="modal-content">
-<span class="close" onclick="closeModal('projects')">X</span>
-
-<h3>My Projects</h3>
-
-<div class="project">
-<p><b>Ecommerce Customer Segmentation</b></p>
-<a href="https://github.com/dharsan0001/Ecommerce-Customer-Segmentation-Analysis" target="_blank">View Project</a>
-</div>
-
-<div class="project">
-<p><b>Financial Dashboard</b></p>
-<a href="https://github.com/dharsan0001/financial-dahboard" target="_blank">View Project</a>
-</div>
-
-<div class="project">
-<p><b>SaaS Customer Churn Analytics</b></p>
-<a href="https://github.com/dharsan0001/End-to-End-SaaS-Customer-Churn-Revenue-Analytics" target="_blank">View Project</a>
-</div>
-
-<div class="project">
-<p><b>Customer-Segmentation-Analysis</b></p>
-<a href="https://github.com/dharsan0001/Ecommerce-Customer-Segmentation-Analysis" target="_blank">View Project</a>
-</div>
-
-
-<div class="project">
-<p><b>End-to-End-SaaS-Customer-Churn-Revenue-Analytics</b></p>
-<a href="https://github.com/dharsan0001/End-to-End-SaaS-Customer-Churn-Revenue-Analytics" target="_blank">View Project</a>
-</div>
-
-
+<iframe src="resume.pdf"></iframe>
 
 </div>
+</section>
+
+<!-- CONTACT -->
+<section>
+<div class="card">
+<h2>Contact</h2>
+<p>📧 dharsanm1605@gmail.com</p>
+<p>📞 9360270034</p>
+</div>
+</section>
+
+<!-- IMAGE POPUP -->
+<div class="modal" id="imgModal">
+<img id="modalImg">
 </div>
 
-<div id="contact" class="modal">
-<div class="modal-content">
-<span class="close" onclick="closeModal('contact')">X</span>
-<h3>Contact</h3>
-<p>Email: dharsanm1605@gmail.com</p>
-<p>Phone: 9360270034</p>
-<p>Please Contact me</p>
-</div>
-</div>
-
-<!-- JS -->
 <script>
-function openModal(id){
-document.getElementById(id).style.display="flex";
+/* IMAGE POPUP */
+const modal=document.getElementById("imgModal");
+const modalImg=document.getElementById("modalImg");
+
+document.getElementById("profilePic").onclick=function(){
+modal.classList.add("active");
+modalImg.src=this.src;
+}
+modal.onclick=()=>modal.classList.remove("active");
+
+/* SCROLL ANIMATION */
+const cards=document.querySelectorAll(".card");
+
+window.addEventListener("scroll",()=>{
+cards.forEach(c=>{
+let pos=c.getBoundingClientRect().top;
+if(pos<window.innerHeight-100){
+c.classList.add("show");
+}
+});
+});
+
+/* 🌌 PARALLAX BACKGROUND */
+const canvas=document.getElementById("bg");
+const ctx=canvas.getContext("2d");
+
+canvas.width=innerWidth;
+canvas.height=innerHeight;
+
+let particles=[];
+let mouse={x:0,y:0};
+
+for(let i=0;i<120;i++){
+particles.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+size:Math.random()*2
+});
 }
 
-function closeModal(id){
-document.getElementById(id).style.display="none";
-}
+document.addEventListener("mousemove",(e)=>{
+mouse.x=e.clientX;
+mouse.y=e.clientY;
+});
 
-/* DARK LIGHT */
-function toggleTheme(){
-document.body.classList.toggle("light");
+function animate(){
+ctx.fillStyle="#020617";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+particles.forEach(p=>{
+let dx=(mouse.x-canvas.width/2)*0.02;
+let dy=(mouse.y-canvas.height/2)*0.02;
+
+ctx.beginPath();
+ctx.arc(p.x+dx,p.y+dy,p.size,0,Math.PI*2);
+ctx.fillStyle="#38bdf8";
+ctx.fill();
+});
+
+requestAnimationFrame(animate);
 }
+animate();
 </script>
 
 </body>
